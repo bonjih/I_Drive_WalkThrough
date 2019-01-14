@@ -51,4 +51,8 @@ for root, dirs, files in os.walk(paths):
 df = pd.DataFrame(data, columns=['Filename', 'Fullpath', 'Created', 'Modified'])
 df.to_sql(con=engine, name='I_drive', if_exists='replace', index=True, index_label='id')
 
+// dtype=sqlalchemy.types.NVARCHAR(length=255) converts columns to 'utf8_general_ci' if run into 
+// '1366, "Incorrect string value: '\\xE1\\xBC\\x80\\xCE\\' issues (3 bits v 4 bits)
+#df.to_sql(con=engine, name='I_drive', if_exists='replace', index=True, index_label='id', dtype=sqlalchemy.types.NVARCHAR(length=255))
+
 print("--- %s seconds ---" % (time.time() - start_time))
